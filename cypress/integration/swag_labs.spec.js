@@ -1,5 +1,3 @@
-///<reference types="Cypress" />
-
 describe('My First Test', () => {
     beforeEach(function(){
         cy.visit('https://www.saucedemo.com')
