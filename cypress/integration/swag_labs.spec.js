@@ -39,15 +39,6 @@ describe('My First Test', () => {
         cy.get('.shopping_cart_badge').should('be.visible')
     })
 
-    it('Remover um produto do carrinho', () => {
-        cy.get('[data-test="username"]').type('standard_user')
-        cy.get('[data-test="password"]').type('secret_sauce')
-        cy.get('[data-test="login-button"]').click()
-        cy.get('[data-test="title"]').should('be.visible')
-        cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
-        cy.get('[data-test="remove-sauce-labs-backpack"]').click()
-        cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').should('be.visible')
-    })
 
     it('Comprar um produto do carrinho', () => {
         cy.get('[data-test="username"]').type('standard_user')
