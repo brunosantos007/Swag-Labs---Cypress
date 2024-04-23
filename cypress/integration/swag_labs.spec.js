@@ -39,6 +39,15 @@ describe('My First Test', () => {
         cy.get('.shopping_cart_badge').should('be.visible')
     })
 
+    it('Remover um produto do carrinho', () => {
+        cy.get('[data-test="username"]').type('standard_user')
+        cy.get('[data-test="password"]').type('secret_sauce')
+        cy.get('[data-test="login-button"]').click()
+        cy.get('[data-test="title"]').should('be.visible')
+        cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
+        cy.get('[data-test="remove-sauce-labs-backpack"]').click()
+        cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').should('be.visible')
+    })
 
     it('Comprar um produto do carrinho', () => {
         cy.get('[data-test="username"]').type('standard_user')
@@ -50,7 +59,7 @@ describe('My First Test', () => {
         cy.get('[data-test="checkout"]').click()
         cy.get('[data-test="firstName"]').type('QA')
         cy.get('[data-test="lastName"]').type('Teste')
-        cy.get('[data-test="postalCode"]').type(97229000)
+        cy.get('[data-test="postalCode"]').type('97229000')
         cy.get('[data-test="continue"]').click()
         cy.get('[data-test="finish"]').click()
         cy.get('[data-test="pony-express"]').should('be.visible')
@@ -68,7 +77,7 @@ describe('My First Test', () => {
         cy.get('[data-test="checkout"]').click()
         cy.get('[data-test="firstName"]').type('QA')
         cy.get('[data-test="lastName"]').type('Teste')
-        cy.get('[data-test="postalCode"]').type(97229000)
+        cy.get('[data-test="postalCode"]').type('97229000')
         cy.get('[data-test="continue"]').click()
         cy.get('[data-test="finish"]').click()
         cy.get('[data-test="pony-express"]').should('be.visible')
@@ -122,9 +131,19 @@ describe('My First Test', () => {
         cy.get('[data-test="checkout"]').click()
         cy.get('[data-test="firstName"]').type('QA')
         cy.get('[data-test="lastName"]').type('Teste')
-        cy.get('[data-test="postalCode"]').type(97229000)
+        cy.get('[data-test="postalCode"]').type('97229000')
         cy.get('[data-test="continue"]').click()
         cy.get('[data-test="total-label"]').contains('0.00').should('be.visible')
+    })
+
+    it('Realizar o Logout', () => {
+        cy.get('[data-test="username"]').type('standard_user')
+        cy.get('[data-test="password"]').type('secret_sauce')
+        cy.get('[data-test="login-button"]').click()
+        cy.get('[data-test="title"]').should('be.visible')
+        cy.get('#react-burger-menu-btn').click()
+        cy.get('[data-test="logout-sidebar-link"]').click()
+        cy.get('.login_logo').contains('Swag Labs').should('be.visible')
     })
 
 })
