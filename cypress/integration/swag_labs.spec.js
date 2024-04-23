@@ -46,6 +46,7 @@ describe('My First Test', () => {
         cy.get('[data-test="title"]').should('be.visible')
         cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
         cy.get('[data-test="remove-sauce-labs-backpack"]').click()
+        cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').should('be.visible')
     })
 
     it('Comprar um produto do carrinho', () => {
