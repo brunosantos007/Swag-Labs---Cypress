@@ -38,16 +38,7 @@ describe('My First Test', () => {
 
     it('Comprar um produto do carrinho', () => {
         cy.login_standardUser()
-        cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
-        cy.get('[data-test="shopping-cart-link"]').click()
-        cy.get('[data-test="checkout"]').click()
-        cy.get('[data-test="firstName"]').type('QA')
-        cy.get('[data-test="lastName"]').type('Teste')
-        cy.get('[data-test="postalCode"]').type('97229000')
-        cy.get('[data-test="continue"]').click()
-        cy.get('[data-test="finish"]').click()
-        cy.get('[data-test="pony-express"]').should('be.visible')
-        cy.get('[data-test="complete-header"]').contains('Thank you for your order!')
+        cy.buy_a_product()
     })
 
     it('Comprar mais de um produto do carrinho', () => {
@@ -107,6 +98,63 @@ describe('My First Test', () => {
         cy.get('#react-burger-menu-btn').click()
         cy.get('[data-test="logout-sidebar-link"]').click()
         cy.get('.login_logo').contains('Swag Labs').should('be.visible')
+    })
+
+    it('Erro ao finalizar ao inserir o LastName', () =>{
+        cy.login_errorUser()
+        cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
+        cy.get('[data-test="shopping-cart-link"]').click()
+        cy.get('[data-test="checkout"]').click()
+        cy.get('[data-test="firstName"]').type('QA')
+        Cypress.on('uncaught:exception', (err, runnable) => {
+            cy.get('[data-test="lastName"]').type('Teste').should('be.empty')
+            return false
+        })
+        cy.get('[data-test="postalCode"]').type('97229000')
+        cy.get('[data-test="continue"]').click()
+        Cypress.on('uncaught:exception', (err, runnable) => {
+            cy.get('[data-test="finish"]').click()
+            return true
+        })
+    })
+
+    it('Impossibilita finalizar a compra do produto sem inserir o First Name', () =>{
+        cy.login_standardUser()
+        cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
+        cy.get('[data-test="shopping-cart-link"]').click()
+        cy.get('[data-test="checkout"]').click()
+        cy.get('[data-test="lastName"]').type('Teste')
+        cy.get('[data-test="postalCode"]').type('97229000')
+        cy.get('[data-test="continue"]').click()
+        cy.contains('Error: First Name is required').should('be.visible')
+    })
+
+    it('Impossibilita finalizar a compra do produto sem inserir o Last Name', () =>{
+        cy.login_standardUser()
+        cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
+        cy.get('[data-test="shopping-cart-link"]').click()
+        cy.get('[data-test="checkout"]').click()
+        cy.get('[data-test="firstName"]').type('QA')
+        cy.get('[data-test="postalCode"]').type('97229000')
+        cy.get('[data-test="continue"]').click()
+        cy.contains('Error: Last Name is required').should('be.visible')
+    })
+
+    it('Impossibilita finalizar a compra do produto sem inserir o Zip/Postal Code', () =>{
+        cy.login_standardUser()
+        cy.get('[data-test="add-to-cart-sauce-labs-backpack"]').click()
+        cy.get('[data-test="shopping-cart-link"]').click()
+        cy.get('[data-test="checkout"]').click()
+        cy.get('[data-test="firstName"]').type('QA')
+        cy.get('[data-test="lastName"]').type('Teste')
+        cy.get('[data-test="continue"]').click()
+        cy.contains('Error: Postal Code is required').should('be.visible')
+    })
+
+    it('Validar o acesso da página de Produto', () =>{
+        cy.login_standardUser()
+        cy.get('[data-test="item-4-title-link"] > [data-test="inventory-item-name"]').click()
+        cy.contains('Sauce Labs Backpack').should('be.visible')
     })
 
 })

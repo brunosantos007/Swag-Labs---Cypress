@@ -11,8 +11,11 @@
     "username": "problem_user",
     "password": "secret_sauce"
   },
+  "errorUser": {
+    "username": "error_user",
+    "password": "secret_sauce"
+  },
   "url":{
     "swag_labs": "https://www.saucedemo.com"
   }
-  
 }
